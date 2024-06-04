@@ -32,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 // Usando sessions para salvar os dados no navegador.
 const sessionOptions = session({
-  secret: 'hfdshfsjhfyrye343hjfhdu3443uhfhdj',
+  secret: process.env.SESSIONSECRET,
   store: MongoStore.create({ mongoUrl: process.env.CONNECTIONSTRING }),
   resave: false,
   saveUninitialized: false,
@@ -61,8 +61,8 @@ app.use(routes);
 
 // Só inicia o servidor quando a promise da conexão com o banco emitir o sinal 'pronto'.
 app.on('pronto', () => {
-  app.listen(3000, () => {
-    console.log('Acessar http://localhost:3000');
-    console.log('Servidor executando na porta 3000');
+  app.listen(process.env.SERVERPORT, () => {
+    console.log(`Acessar http://localhost:${process.env.SERVERPORT}`);
+    console.log(`Servidor executando na porta ${process.env.SERVERPORT}`);
   });
 });
